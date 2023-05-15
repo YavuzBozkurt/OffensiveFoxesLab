@@ -1,5 +1,5 @@
 # OffensiveFoxesLab
-Lab on Offensive 2IC80
+#### Lab on Offensive 2IC80
 <p align="center">
   <img src="/markdown_images/fox_logo.png" alt="OpenAI Logo" width="30%" height="30%">
 </p>
@@ -9,15 +9,17 @@ Lab on Offensive 2IC80
 
 # Table of Contents
 - [OffensiveFoxesLab](#offensivefoxeslab)
+      - [Lab on Offensive 2IC80](#lab-on-offensive-2ic80)
 - [Table of Contents](#table-of-contents)
 - [Attack Capabilities:](#attack-capabilities)
 - [Attack Descriptions](#attack-descriptions)
   - [DNS Poisoning](#dns-poisoning)
   - [ARP Poisoning](#arp-poisoning)
   - [SSL Stripping](#ssl-stripping)
-- [Environment](#environment)
+- [Tools](#tools)
 - [Set-up](#set-up)
-- [Available Commands](#available-commands)
+- [Commands](#commands)
+- [Useful Links](#useful-links)
 
 # Attack Capabilities:
 - `DNS Poisoning`
@@ -62,11 +64,19 @@ Lab on Offensive 2IC80
   
 - `Vulnerability` is that in the old days, client browser would communicate with webservers via HTTP, which is not secure, and webservers would accept this. Requesting via HTTP is still possible, however well configured webservers usually demand that the client uses HTTPs instead for security purposes in response. The attacker can exploit this, by intercepting that webserver request, and establishing a secure connection, then strip off the s in HTTPs, and propogate the message to the client back, so that it looks as if the web-server has accepted HTTP communication. This attack is visualized down below.
 <p align="center">
-  <img src="/markdown_images/SSL_strip.png" alt="arp attack" width="80%" height="80%">
+  <img src="/markdown_images/SSL_strip.png" alt="arp attack" width="65%" height="80%">
 </p>
 
-# Environment
+# Tools
+- [Ettercap](https://www.ettercap-project.org/downloads.html)
+- [Wireshark](https://www.wireshark.org/download.html)
 
 # Set-up
+- [M1 VM (Victim)](https://www.virtualbox.org/)
+- [M2 VM (Server)](https://www.virtualbox.org/)
+- [M3 VM (Attacker)](https://www.virtualbox.org/)
 
-# Available Commands
+
+# Commands
+
+# Useful Links
