@@ -42,7 +42,7 @@
 
 ## ARP Poisoning
   - `ARP (Adress Resolution Protocol)` is the link layer protocol used to map IP addresses of nodes (e.g. hosts, webservers, IoT, etc.) to MAC addresses, which are hardcoded 32-bit codes made by the manufactures to distinguish devices uniquely. When a node wants to communicate another node in it's LAN, it requires it's MAC address in the link layer. It first checks it's ARP cache, where mappings of IP address &rarr; MAC address are stored. If the IP address is not in this cache, then, it broadcasts a message, where it asks the MAC address for the corresponding node with the given IP address. The node that owns the IP address responds to the node with an ARP response, where it provides it's MAC address. The requesting node caches the appropriate mapping, and uses that mapping from that point on and onwards. Down below a visual demonstration of how the protocol works is provided:
-  - 
+   
 <p align="center">
 <img src="/markdown_images/arp_protocol.png" alt="arp protocol" width="80%" height="80%">
 </p>
