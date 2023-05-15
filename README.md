@@ -33,7 +33,7 @@ Lab on Offensive 2IC80
     <p align="center">
     <img src="/markdown_images/arp_packet.png" alt="arp protocol" width="80%" height="80%">
     </p> 
-    - `Vulnerability` of the system concerns the cache of the node who is making the ARP request. If the integrity of the cache is manipulate, then the attacker can map a recorded IP address to the MAC address of a node he owns. He can do so by mimicking a legitimate ARP response. Normally, when a node that doesn't have the IP address being questioned drops the packet and does not response, the attacker can construct a packet with a spoofed IP address, send this to the requesting node so that it caches the response. Down below a visual demonstration is available
+    - `vulnerability` of the system concerns the cache of the node who is making the ARP request. If the integrity of the cache is manipulate, then the attacker can map a recorded IP address to the MAC address of a node he owns. He can do so by mimicking a legitimate ARP response. Normally, when a node that doesn't have the IP address being questioned drops the packet and does not response, the attacker can construct a packet with a spoofed IP address, send this to the requesting node so that it caches the response. Down below a visual demonstration is available
     <p align="center">
     <img src="/markdown_images/arp_attack.png" alt="arp attack" width="80%" height="80%">
     </p>
