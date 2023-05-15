@@ -1,5 +1,5 @@
 # OffensiveFoxesLab
-#### Lab on Offensive 2IC80
+**Lab on Offensive 2IC80**
 <p align="center">
   <img src="/markdown_images/fox_logo.png" alt="OpenAI Logo" width="30%" height="30%">
 </p>
@@ -9,7 +9,6 @@
 
 # Table of Contents
 - [OffensiveFoxesLab](#offensivefoxeslab)
-      - [Lab on Offensive 2IC80](#lab-on-offensive-2ic80)
 - [Table of Contents](#table-of-contents)
 - [Attack Capabilities:](#attack-capabilities)
 - [Attack Descriptions](#attack-descriptions)
