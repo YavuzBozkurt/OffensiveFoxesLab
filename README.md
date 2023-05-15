@@ -4,8 +4,9 @@
   <img src="/markdown_images/fox_logo.png" alt="OpenAI Logo" width="30%" height="30%">
 </p>
 
-`Lab Documentation:` https://www.overleaf.com/project/64620f7b145fd4a22f7b6f98
+`Description` this repository contains the source code and documentation for an automated tool that performs DNS, ARP poisoning and SSL stripping attacks via the auxiliary of a GUI.  
 
+`Lab Documentation:` https://www.overleaf.com/project/64620f7b145fd4a22f7b6f98
 
 # Table of Contents
 - [OffensiveFoxesLab](#offensivefoxeslab)
