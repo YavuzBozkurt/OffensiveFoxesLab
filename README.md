@@ -15,6 +15,9 @@ Lab on Offensive 2IC80
   - [DNS Poisoning](#dns-poisoning)
   - [ARP Poisoning](#arp-poisoning)
   - [SSL Stripping](#ssl-stripping)
+- [Environment](#environment)
+- [Set-up](#set-up)
+- [Available Commands](#available-commands)
 
 # Attack Capabilities:
 - `DNS Poisoning`
@@ -42,7 +45,8 @@ Lab on Offensive 2IC80
 <p align="center">
 <img src="/markdown_images/arp_protocol.png" alt="arp protocol" width="80%" height="80%">
 </p>
-- packets: of ARP is as below,
+
+- `packets` of ARP are as below,
 <p align="center">
 <img src="/markdown_images/arp_packet.png" alt="arp protocol" width="80%" height="80%">
 </p> 
@@ -60,3 +64,9 @@ Lab on Offensive 2IC80
 <p align="center">
   <img src="/markdown_images/SSL_strip.png" alt="arp attack" width="80%" height="80%">
 </p>
+
+# Environment
+
+# Set-up
+
+# Available Commands
