@@ -26,7 +26,7 @@
 
 
 #  Dev. Planning
-- [Trello Boarad](https://trello.com/invite/b/WSTP28RN/ATTI3e7f27a0a56151d7ad98b7b5a177b360BD2F4FB2/lab-on-offensive-2ic80-group-54-project)
+- [Trello Board](https://trello.com/invite/b/WSTP28RN/ATTI3e7f27a0a56151d7ad98b7b5a177b360BD2F4FB2/lab-on-offensive-2ic80-group-54-project)
 
 # Attack Capabilities:
 - `DNS Poisoning`
