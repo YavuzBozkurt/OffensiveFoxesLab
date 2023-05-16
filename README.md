@@ -95,4 +95,6 @@
 
 # Commands
 
+hello
+
 # Useful Links
