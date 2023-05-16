@@ -12,6 +12,7 @@
 - [OffensiveFoxesLab](#offensivefoxeslab)
 - [Table of Contents](#table-of-contents)
 - [Attack Capabilities:](#attack-capabilities)
+- [Attack Schemes](#attack-schemes)
 - [Attack Descriptions](#attack-descriptions)
   - [DNS Poisoning](#dns-poisoning)
   - [ARP Poisoning](#arp-poisoning)
@@ -25,6 +26,11 @@
 - `DNS Poisoning`
 - `ARP Poisoning`
 - `SSL Stripping`
+
+# Attack Schemes
+- [DNS poisoning scheme](https://tuenl-my.sharepoint.com/:u:/r/personal/y_bozkurt_student_tue_nl/Documents/DNS%20Poisoning%20Scheme.vsdx?d=waea298ea2c4b41cd9882ea4c142f3eda&csf=1&web=1&e=kBJcBN)
+- [ARP poisoning scheme](https://tuenl-my.sharepoint.com/:u:/r/personal/y_bozkurt_student_tue_nl/Documents/ARP%20Poisoning%20Scheme.vsdx?d=wc116a15b5281439f98ed70fb7293f2c3&csf=1&web=1&e=TitkrE)
+- [SSL stripping scheme](https://tuenl-my.sharepoint.com/:u:/r/personal/y_bozkurt_student_tue_nl/Documents/SSL%20Strip%20Scheme.vsdx?d=wdc038e7690fb4346967077ffc43a9b59&csf=1&web=1&e=DHzByf)
 
 # Attack Descriptions
 ## DNS Poisoning
