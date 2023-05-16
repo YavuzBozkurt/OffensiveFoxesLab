@@ -13,6 +13,7 @@
 - [Table of Contents](#table-of-contents)
 - [Attack Capabilities:](#attack-capabilities)
 - [Attack Schemes](#attack-schemes)
+- [GUI Scheme](#gui-scheme)
 - [Attack Descriptions](#attack-descriptions)
   - [DNS Poisoning](#dns-poisoning)
   - [ARP Poisoning](#arp-poisoning)
@@ -31,6 +32,9 @@
 - [DNS poisoning scheme](https://tuenl-my.sharepoint.com/:u:/r/personal/y_bozkurt_student_tue_nl/Documents/DNS%20Poisoning%20Scheme.vsdx?d=waea298ea2c4b41cd9882ea4c142f3eda&csf=1&web=1&e=kBJcBN)
 - [ARP poisoning scheme](https://tuenl-my.sharepoint.com/:u:/r/personal/y_bozkurt_student_tue_nl/Documents/ARP%20Poisoning%20Scheme.vsdx?d=wc116a15b5281439f98ed70fb7293f2c3&csf=1&web=1&e=TitkrE)
 - [SSL stripping scheme](https://tuenl-my.sharepoint.com/:u:/r/personal/y_bozkurt_student_tue_nl/Documents/SSL%20Strip%20Scheme.vsdx?d=wdc038e7690fb4346967077ffc43a9b59&csf=1&web=1&e=DHzByf)
+
+# GUI Scheme
+- [Pencil Project GUI Prototyping](https://pencil.evolus.vn/)
 
 # Attack Descriptions
 ## DNS Poisoning
@@ -78,10 +82,11 @@
 - [Wireshark](https://www.wireshark.org/download.html)
 
 # Set-up
-- [M1 VM (Victim)](https://www.virtualbox.org/)
-- [M2 VM (Server)](https://www.virtualbox.org/)
-- [M3 VM (Attacker)](https://www.virtualbox.org/)
-
+| Profile                                         | IP Adress     |    MAC Address   |   OS     |
+| ------------------------------------------------|:-------------:|:----------------:|:---------:
+| [M1 VM (Victim)](https://www.virtualbox.org/)   | 192.168.56.101| 08:00:27:B7:C4:AF|Windows XP|
+| [M2 VM (Server)](https://www.virtualbox.org/)   | 192.168.56.102| 08:00:27:CC:08:6F|Linux     |
+| [M3 VM (Attacker)](https://www.virtualbox.org/) | 192.168.56.103| 08:00:27:D0:25:4B|Linux     |
 
 # Commands
 
