@@ -96,5 +96,6 @@
 # Commands
 
 hello
+Lars test 
 
 # Useful Links
