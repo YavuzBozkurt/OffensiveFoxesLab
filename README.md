@@ -11,6 +11,7 @@
 # Table of Contents
 - [OffensiveFoxesLab](#offensivefoxeslab)
 - [Table of Contents](#table-of-contents)
+- [Dev. Planning](#dev-planning)
 - [Attack Capabilities:](#attack-capabilities)
 - [Attack Schemes](#attack-schemes)
 - [GUI Scheme](#gui-scheme)
@@ -22,6 +23,10 @@
 - [Set-up](#set-up)
 - [Commands](#commands)
 - [Useful Links](#useful-links)
+
+
+#  Dev. Planning
+- [Trello Boarad](https://trello.com/invite/b/WSTP28RN/ATTI3e7f27a0a56151d7ad98b7b5a177b360BD2F4FB2/lab-on-offensive-2ic80-group-54-project)
 
 # Attack Capabilities:
 - `DNS Poisoning`
