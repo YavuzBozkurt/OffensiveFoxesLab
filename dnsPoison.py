@@ -27,14 +27,15 @@ def getDnsMsgType(pkt,ipVictim,urlsToSpoof):
 
 def dnsSpoofVictimQuery(pkt,goodUrl):
 
-    
+    print(pkt)
 
     return
 
 def dnsPoison():
 
     ipVictim = input("Victim IP address")
-    urlsToSpoof = input("URLs to spoof").split()
+    if not urlsToSpoof:
+        urlsToSpoof = []
 
     (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(ipVictim,urlsToSpoof)
     
