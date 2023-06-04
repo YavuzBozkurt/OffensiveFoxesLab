@@ -27,15 +27,15 @@ def getDnsMsgType(pkt,ipVictim,urlsToSpoof):
 
 def dnsSpoofVictimQuery(pkt,goodUrl):
 
-    print(pkt)
+    pkt.show()
 
     return
 
-def dnsPoison():
+def dnsPoisoning():
+
+    print("\nDNS poisoning attack\n")
 
     ipVictim = input("Victim IP address")
-    if not urlsToSpoof:
-        urlsToSpoof = []
 
     (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(ipVictim,urlsToSpoof)
     
@@ -45,3 +45,47 @@ def dnsPoison():
         pass
 
     return
+
+def showUrlsToSpoof(urlsToSpoof):
+    print("URLs to spoof:")
+    
+    for url in urlsToSpoof:
+        print(url)
+
+    print("")
+
+def inputUrlsToSpoof(urlsToSpoof):
+
+    print("\ninput URLs to spoof")
+    print("after entering last URL, enter c to continue\n")    
+
+    def addUrls(urlsToSpoof):
+	
+        urlsToSpoof.append(user_in)
+        urlsToSpoof.append("*." + user_in)
+        urlsToSpoof.append("*." + user_in)
+
+        return urlsToSpoof
+    
+    while(True):
+        user_in = raw_input(">>> ")
+        user_in_split = user_in.split(".")
+    
+        if user_in == "c":
+            return urlsToSpoof
+    
+        elif len(user_in_split) == 2:
+            urlsToSpoof = addUrls(urlsToSpoof)
+
+        elif len(user_in_split) == 3:
+
+            if user_in_split[0] == "www":
+                del user_in_split[0]
+                user_in = ".".join(user_in_split)
+                urlsToSpoof = addUrls(urlsToSpoof)
+	
+            else:
+                urlsToSpoof.append(user_in)
+    
+        else:
+	        print("Error: bad input \"" + str(user_in) + "\"")
