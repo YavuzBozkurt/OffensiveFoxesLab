@@ -6,14 +6,14 @@ def getInterface(interface):
     user_in = raw_input("reuse interface " + str(interface) + "? (y/n): ")
     
     if user_in in ["y","Y"]:
-	return interface
+        return interface
 
     elif user_in in ["n","N"]:
-	return raw_input("interface: ")
+        return raw_input("interface: ")
 
     else:
-	print("bad input \"" + user_in + "\"")
-	return getInterface(interface)
+        print("bad input \"" + user_in + "\"")
+        return getInterface(interface)
 
     return 
 
