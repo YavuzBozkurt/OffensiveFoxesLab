@@ -6,7 +6,7 @@ def inputline():
     sys.stdout.write("\n>>> ")
     return
 
-urlsToSpoof = [] 
+urlsToSpoof = {} 
 
 print("")
 print("Welcome to the tool, this tool is a console style tool.")
@@ -21,40 +21,41 @@ while runner:
     user_in = raw_input()
         
     if(user_in == "help"):
-        print("")
+	print("")
         print("Here is a list of commands you can use:")
         print("help\nhelp [command]\nmimattack\nonewaypoisoning\nshowurls\naddurls\nreseturls\ndnspoisoning")
         inputline()
     
     elif(user_in == "help help"):
-        print("")
+	print("")
         print("'help' command is used to list all the commands available to user.")
         print("it can also be used in the format 'help [command]' to get more info on the specified command.")
-        inputline()
+	inputline()
         
     elif(user_in == "mimattack"):
         mimAttack()
-        inputline()
+	inputline()
         
     elif(user_in == "onewaypoisoning"):
         oneWayPoisoning()
-        inputline()
+	inputline()
 
     elif(user_in == "showurls"):
-        showUrlsToSpoof(urlsToSpoof)
-        inputline()
+	showUrlsToSpoof(urlsToSpoof)
+	inputline()
 
     elif(user_in == "addurls"):
-        urlsToSpoof = inputUrlsToSpoof(urlsToSpoof)
-        inputline()
+	urlsToSpoof = inputUrlsToSpoof(urlsToSpoof)
+	inputline()
 
     elif(user_in == "reseturls"):
-        urlsToSpoof = []
-        inputline()
+	urlsToSpoof = {}
+	inputline()
 
     elif(user_in == "dnspoisoning"):
-        inputUrlsToSpoof(urlsToSpoof)
-        dnsPoisoning()
+	inputUrlsToSpoof(urlsToSpoof)
+	dnsPoisoning(urlsToSpoof)
+	inputline()
         
     else:
         print("Command not found")

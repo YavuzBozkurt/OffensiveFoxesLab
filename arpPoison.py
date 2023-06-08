@@ -3,17 +3,19 @@ from scapy.all import *
 interface = "enp0s9"
 
 def getInterface(interface):
-    user_in = raw_input("reuse interface " + str(interface) + "? (y/n)\n>>> ")
+    user_in = raw_input("reuse interface " + str(interface) + "? (y/n): ")
     
     if user_in in ["y","Y"]:
-        return interface
+	return interface
 
     elif user_in in ["n","N"]:
-        return raw_input("interface:")
+	return raw_input("interface: ")
 
     else:
-        print("bad input \"" + user_in + "\"")
-        return getInterface(interface)
+	print("bad input \"" + user_in + "\"")
+	return getInterface(interface)
+
+    return 
 
 def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof):
     arp = Ether() / ARP()
@@ -45,6 +47,9 @@ def oneWayPoisoning():
 def mimAttack():
 
     print("\nMITM attack using ARP poisoning\n")
+
+    global interface
+    interface = getInterface(interface)
 
     macAttacker = raw_input("Attacker MAC address: ")
     ipAttacker = raw_input("Attacker IP address: ")
