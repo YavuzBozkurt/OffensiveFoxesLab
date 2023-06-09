@@ -13,19 +13,14 @@ while runner:
     
     if(user_in == "help"):
         print("Here is a list of commands you can use:")
-        print("help\nhelp [command]\nmimattack\nonewaypoisoning")
-        print(">>>", end = " ")
-    
-    elif(user_in == "help help"):
-        print("'help' command is used to list all the commands available to user.")
-        print("it can also be used in the format 'help [command]' to get more info on the specified command.")
+        print("help\nmimattack\nonewaypoisoning")
         print(">>>", end = " ")
         
     elif(user_in == "mimattack"):
-        mimAttack()
+        mimAttack(False)
         
     elif(user_in == "onewaypoisoning"):
-        oneWayPoisoning()
+        oneWayPoisoning(False)
         
     else:
         print("Command not found")

@@ -1,15 +1,29 @@
-import time
+from scapy.all import *
 
-start_time = time.time()
+"""
+import scapy.all as scapy
+  
+request = scapy.ARP()
+  
+request.pdst = '131.155.244.192,131.155.244.1'
+broadcast = scapy.Ether()
+  
+broadcast.dst = 'ff:ff:ff:ff:ff:ff'
+  
+request_broadcast = broadcast / request
+clients = scapy.srp(request_broadcast, timeout = 1)[0]
+for element in clients:
+    print(element[1].psrc + "      " + element[1].hwsrc)
 
-def ellapsed_time(st):
-    et = time.time() - st
-    return et
+#gw = conf.route.route("0.0.0.0")[2]
 
-while True:
-    if (ellapsed_time(start_time)< 30):
-        print(ellapsed_time(start_time))
-        time.sleep(7)
-    else:
-        print(ellapsed_time(start_time))
-        start_time = time.time()
+gateway = "192.168.68.1"
+subnet_mask = "255.255.0.0"
+
+cidr = sum([str(bin(int(octet))).count("1") for octet in subnet_mask.split(".")])
+cidr_str = str(cidr)
+    
+ip_range = gateway + "/" + cidr_str
+
+print(ip_range)
+"""
