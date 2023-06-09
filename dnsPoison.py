@@ -42,8 +42,8 @@ def getDnsMsgType(pkt,ipV,urlsToSpoof):
 def dnsPoisoning(interface,a,urlsToSpoof):
 
     hwA = a["attacker MAC"]
-    ipV = a["victim MAC"]
-    hwV = a["victim IP"]
+    hwV = a["victim MAC"]
+    ipV = a["victim IP"]
     ipG = a["gateway IP"]
 
     print("\nDNS poisoning attack\n")
