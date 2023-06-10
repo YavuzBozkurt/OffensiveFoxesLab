@@ -21,6 +21,8 @@ while runner:
                             ("MiM", "mimattack"),
                             ("One Way", "onewaypoisoning"),
                             ("Scanner", "scan"),
+                            ("DNS Att", "dns"),
+                            ("SSL strip", "ssl"),
                             ("exit", "exit")
                         ]).run()
         
@@ -103,6 +105,12 @@ while runner:
                                       text = "Subnet mask of the interface?").run()
             
             manual_scan(gateway, subnetmask)
+    
+    elif(user_in == "dns"):
+        box = False
+    
+    elif(user_in == "ssl"):
+        box = False
     
     elif(user_in == "exit"):
          runner = False
