@@ -7,6 +7,8 @@ def auto_scan():
 
     arp_result = arping(ip_range)
     
+    close = raw_input()
+    
 def manual_scan(gateway,subnet_mask):
 
     cidr = sum([str(bin(int(octet))).count("1") for octet in subnet_mask.split(".")])
@@ -15,3 +17,5 @@ def manual_scan(gateway,subnet_mask):
     ip_range = gateway + "/" + cidr_str
 
     arp_result = arping(ip_range)
+    
+    close = raw_input()
