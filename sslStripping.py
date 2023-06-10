@@ -1,4 +1,4 @@
-def nameorso(packet):
+def nameorso(pkt):
 
     if pkt[TCP].payload:
         raw = packet[TCP].payload.load
@@ -15,4 +15,5 @@ def sslStripping(a):
 
     while(True):
     
-        sniff(filter="tcp port 80", prn=nameorso, store=0)
+        pkt = sniff(filter="tcp port 80", prn=nameorso)[0]
+        

