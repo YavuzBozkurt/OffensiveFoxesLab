@@ -3,7 +3,6 @@ import threading
 from dnsPoison import *
 from arpPoison import *
 from sslStripping import *
-from sslPlagiarism import *
 from setup import *
 
 hwA,hwV,hwG,ipV,ipG = "attacker MAC","victim MAC","gateway MAC","victim IP","gateway IP"
@@ -24,6 +23,7 @@ showAddrs(a)
 showUrlsToSpoof(urlsToSpoof)
 interface = getInterface(interface)
 threads = updateThreads([None,None],a,interface,mimLive,owpLive)
+
 
 runner = True
 

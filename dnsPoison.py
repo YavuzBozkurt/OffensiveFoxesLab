@@ -15,6 +15,7 @@ def getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof,interface):
             packetFound = checkForDns(pkt[0],ipV,urlsToSpoof)
             if packetFound:
                 return packetFound
+
     
 def checkForDns(pkt,ipV,urlsToSpoof):
     
@@ -38,6 +39,7 @@ def getDnsMsgType(pkt,ipV,urlsToSpoof):
     
     else: 
         return (False, False)
+
 
 def dnsPoisoning(interface,a,urlsToSpoof):
 
@@ -64,6 +66,7 @@ def dnsPoisoning(interface,a,urlsToSpoof):
             return
 
     return
+
 
 def dnsForgeResponse(pkt, urlsToSpoof):
 

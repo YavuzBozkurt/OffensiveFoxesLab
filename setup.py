@@ -1,6 +1,7 @@
 import threading
 from arpPoison import *
 
+
 def getInterface(interface):
     
     print("")
