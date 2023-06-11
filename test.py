@@ -1,4 +1,5 @@
 from scapy.all import *
+from prompt_toolkit.shortcuts import button_dialog, input_dialog
 
 """
 import scapy.all as scapy
@@ -27,3 +28,9 @@ ip_range = gateway + "/" + cidr_str
 
 print(ip_range)
 """
+urls = None
+
+if urls:
+    print("fu")
+else:
+    print("fm")
