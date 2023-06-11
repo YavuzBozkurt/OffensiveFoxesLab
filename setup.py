@@ -1,3 +1,6 @@
+import threading
+from arpPoison import *
+
 def getInterface(interface):
     
     print("")
@@ -17,6 +20,7 @@ def getInterface(interface):
 
     return
 
+
 def showUrlsToSpoof(urlsToSpoof):
 
     print("\nURLs to spoof:")
@@ -25,6 +29,7 @@ def showUrlsToSpoof(urlsToSpoof):
         print(url)
 
     return
+
 
 def inputUrlsToSpoof(urlsToSpoof):
 
@@ -66,6 +71,7 @@ def inputUrlsToSpoof(urlsToSpoof):
         else:
             print("Error: bad input \"" + str(user_in) + "\"")
 
+
 def showAddrs(addrs):
 
     print("")    
@@ -75,6 +81,7 @@ def showAddrs(addrs):
 
     return
 
+
 def addAddrs(addrs):
 
     print("")
@@ -83,3 +90,25 @@ def addAddrs(addrs):
         addrs[k] = raw_input(k + ": ")
 
     return addrs
+
+
+def safeAddAddrs(addrs,threads):
+
+    if threads[0].is_alive():
+        print("stop mimattack first")
+
+    elif threads[1].is_alive():
+        print("stop onewaypoisoning first")
+
+    else:
+        return addAddrs(addrs)
+
+    return addrs
+
+
+def updateThreads(threads,a,interface,mimLive,owpLive):
+
+    threads[0] = threading.Thread( target=mimAttack, name="mimattack", args=(a,interface,mimLive))
+    threads[1] = threading.Thread( target=oneWayPoisoning, name="owpoisoning", args=(a,interface,owpLive))
+
+    return threads

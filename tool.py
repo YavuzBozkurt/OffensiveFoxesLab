@@ -1,4 +1,3 @@
-# import sys
 import threading
 
 from dnsPoison import *
@@ -19,24 +18,23 @@ print("For the list of commands use the command 'help'")
 print("For more info on a command use the command 'help [command]'")
 print("to close or reset the tool, use the input 'ctrl+c'")
 
+mimLive,owpLive = threading.Event(),threading.Event()
+
 showAddrs(a)
 showUrlsToSpoof(urlsToSpoof)
 interface = getInterface(interface)
+threads = updateThreads([None,None],a,interface,mimLive,owpLive)
 
 runner = True
 
 while runner:
  
-    mimThread = threading.Thread(target=mimAttack, name="mimattack", args=(a,interface))
-    owpThread = threading.Thread(target=oneWayPoisoning, name="owpoisoning", args=(a,interface))
-    sslThread = threading.Thread(target=sslStripping, name="sslstripping")
-
     user_in = raw_input("\n>>> ")
         
     if(user_in == "help"):
         print("")
         print("Here is a list of commands you can use:")
-        print("help\nhelp [command]\nmimattack\nonewaypoisoning\nsetinterface\nshowaddrs\nsetaddrs\nshowurls\naddurls\nreseturls\ndnspoisoning")
+        print("help\nhelp [command]\nmimattack\nonewaypoisoning\nshowaddrs\nsetaddrs\nshowurls\naddurls\nreseturls\ndnspoisoning\nsslstripping\nsslstatus\nstopssl")
     
     elif(user_in == "help help"):
         print("")
@@ -44,10 +42,18 @@ while runner:
         print("it can also be used in the format 'help [command]' to get more info on the specified command.")
         
     elif(user_in == "mimattack"):
-        mimThread.start()
+        mimLive = threading.Event()
+        threads[0].start()
         
+    elif(user_in == "stopmimattack"):
+        mimLive.set()
+
     elif(user_in == "onewaypoisoning"):
-        owpThread.start()
+        owpLive = threading.Event()
+        threads[1].start()
+
+    elif(user_in == "stoponewaypoisoning"):
+        owpLive.set()
 
     elif(user_in == "showurls"):
         showUrlsToSpoof(urlsToSpoof)
@@ -62,18 +68,27 @@ while runner:
         showAddrs(a)
 
     elif(user_in == "setaddrs"):
-        addAddrs(a)
+        a = safeAddAddrs(a,threads)
+        threads = updateThreads(threads,a,interface,mimLive,owpLive)
 
     elif(user_in == "dnspoisoning"):
         dnsPoisoning(interface,a,urlsToSpoof)
         
     elif(user_in == "sslstripping"):
-        # sslThread.start()
-        owpThread.start()
         sslStripping()
+        dnsPoisoning(interface,a,urlsToSpoof)
 
-    elif(user_in == "stopssl"):
+    elif(user_in == "sslstrippingstatus"):
+        displayStatus()
+
+    elif(user_in == "stopsslstripping"):
         stopStripping()
+
+    elif(user_in == "quit"):
+        print("")
+        mimLive.set()
+        owpLive.set()
+        runner = False
 
     else:
         print("Command not found")

