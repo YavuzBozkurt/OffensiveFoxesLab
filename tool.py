@@ -1,6 +1,7 @@
 from arpPoison import *
 from networkScan import *
 from dnsPoison import *
+from sslStripping import *
 import os
 from prompt_toolkit.shortcuts import button_dialog, input_dialog
 
@@ -160,7 +161,7 @@ while runner:
         
         os.system("sysctl net.ipv4.ipforward=0")
         
-        box = False
+        sslStripping()
     
     elif(user_in == "exit"):
          runner = False
