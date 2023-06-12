@@ -18,3 +18,15 @@ The user needs to consider the followings
   found list
 - to stop an ongoing attack, press Ctrl + C on your keyboard
 ```
+There are several dependencies that need to be installed via Linux terminal, these are,
+- scapy
+- twisted
+- netifaces
+- prompt_toolkit 
+\
+\
+You may install them using the command
+```
+pip3 install <dependency-name> 
+```
+To observe packets that are being intercepted, you may use [Wireshark](https://www.wireshark.org/)
